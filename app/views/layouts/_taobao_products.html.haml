@@ -1,0 +1,12 @@
+- if @products.size > 0
+  %section.container
+    .row
+      %h3.page-header= @tbk_title 
+      - @products.each_with_index do |product,index|
+        -if index != 0 && index % 4 == 0
+          .clearfix.hidden-sm.hidden-xs
+        .col-md-3.col-sm-6.col-xs-6
+          %div.thumbnail
+            %img{src: "#{product['pic_url']}", alt: "#{product['title']}"}
+            %p 
+              %a{href:"#{product["item_url"]}", target: "_blank", rel:"nofollow", title:"#{product['title']}", isconvert:"1"}= product["title"]

@@ -1,0 +1,45 @@
+- title "#{@video.title}"
+- keywords "#{@video.title}，#{@video.title.split(',').join('，')}"
+- head_desc "#{@video.description}，#{@video.name}，#{@video.category}视频在线观看。"
+- mobile_url('m.1024yy.wang',request.path) if request.host != 'm.1024yy.wang'
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header #{@video.name}      
+      %div{id: "ykplayer0", style: "width:100%;height:100%;"}
+      %p{style: "margin-top:10px", class: "alert alert-info"}
+        %b 视频信息：
+        %br
+        发布于：#{@video.published_at.strftime('%Y-%m-%d')}
+        %br
+        已播放：#{@video.view_count}次
+        %br
+        标签：
+        - @video.tags.split(',').each do |tag|
+          %span
+            %a{href:"/tag/#{URI.encode(tag)}/"}= tag
+        %br
+        分类：
+        %span
+          %a{href:"/#{URI.encode(@video.category)}.html"}= @video.category
+        %br
+        - if @comments.size > 0 
+          精彩评论：#{@comments.join}
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      - if @related_videos.size > 0
+        %h3.page-header 相关视频
+        %div
+          - @related_videos.each_with_index do |video, index|
+            - if index % 2 == 0
+              .row
+            .col-md-6.col-lg-6.col-sm-12{style: "margin-bottom: 10px"}
+              %a{href:"/video/#{video.id}/", title: "#{video.name}"}
+                %img.img-responsive.img-thumbnail{alt: "#{video.name}图片", src: "#{video.small_img_url}", style: "width:100%"}
+              %a{href:"/video/#{video.id}/"}
+                %u= video.name
+
+%script{type: "text/javascript", src: "http://gcw.vxixi.com/ykplayer/jsapi.js"}
+%script{type: "text/javascript"}
+  var x0 = new JWP({client_id: '82ca06da2497bd12',vid:'#{@video.youku_id}',target:'ykplayer0'});x0.selectH5MP4();

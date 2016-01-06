@@ -1,0 +1,22 @@
+- title "#{@category_name}视频在线观看_1024YY网"
+- keywords "#{@category_name}视频，#{@category_name}视频在线观看，#{@category_name}视频集锦"
+- head_desc "#{@category.description}"
+- mobile_url('m.1024yy.wang',request.path) if request.host != 'm.1024yy.wang'
+
+%section.container
+  %article
+    .row
+      %h1.page-header #{@category_name}视频集锦
+      %p.alert.alert-info #{@category.description}
+    - @tags.each do |tag|
+      .row
+        %h2.page-header 热门#{tag.name}视频
+        - tag.hot_videos.each_with_index do |video, index|
+          - if index != 0 && index % 4 == 0
+            .clearfix
+          .col-md-3.col-sm-6.col-xs-6
+            .thumbnail
+              %img{src:"#{video.small_img_url}", alt:"#{video.name}", width: "100%"}
+              .caption
+                %p
+                  %a{href: "/video/#{video.id}/"}= "#{video.name}"
