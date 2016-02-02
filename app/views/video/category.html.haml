@@ -20,3 +20,5 @@
               .caption
                 %p
                   %a{href: "/video/#{video.id}/"}= "#{video.name}"
+        .clearfix
+        %a.pull-right{href: "/tag/#{URI.encode(tag.name)}/"} 查看更多#{tag.name}视频

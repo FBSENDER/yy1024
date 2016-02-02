@@ -18,7 +18,7 @@ class VideoController < ApplicationController
     @category_name = params[:category_name] || '极限运动'
     @category = Category.where(name: @category_name).take
     not_found if @category.nil?
-    @tags = Tag.where(id: @category.tag_ids.split(',')).select(:name,:img_url,:small_img_url,:description,:hot_video_ids,:new_video_ids).to_a
+    @tags = Tag.where(id: @category.tag_ids.split(',').sample(8)).select(:name,:img_url,:small_img_url,:description,:hot_video_ids,:new_video_ids).to_a
   end
 
 end
